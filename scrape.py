@@ -41,12 +41,9 @@ def scrape_to_csv():
     driver.quit()
 
     # export csv file
-    with open("output.csv", "w") as output:
+    with open("data.csv", "w") as data:
         for i in rows:
-            output.write(i)
+            data.write(i)
 
-def main():
+if __name__ == "__main__":
     scrape_to_csv()
-
-if __name__ == "main":
-    main()
