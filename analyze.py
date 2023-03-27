@@ -3,13 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-def main():
+def read_csv():
     df = pd.read_csv("data.csv", names=["Date", "CPI"], index_col="Date", parse_dates=True)
     # df.index = pd.to_datetime(df.index)
     df["CPI"] = df["CPI"].str.rstrip("%").astype(float)
-
     X = np.array(range(0, len(df.index))).reshape(-1,1)
     y = df["CPI"]
+
+    return X, y,  df
+
+def main():
+    X, y, df = read_csv()
     lr = LinearRegression()
     lr.fit(X, y)
     df["LR CPI"] = lr.predict(X)
