@@ -9,8 +9,41 @@ def read_csv():
     df["CPI"] = df["CPI"].str.rstrip("%").astype(float)
     X = np.array(range(0, len(df.index))).reshape(-1,1)
     y = df["CPI"]
+    df["X"] = X
 
-    return X, y,  df
+    return X, y, df
+
+def df_cov_var_lin_reg(df):
+    cov = df.cov().loc["X","CPI"]
+    var = df.var().loc["X"]
+    slope = cov / var
+    intercept = df.mean().loc["CPI"] - slope*df.mean().loc["X"]
+
+    return slope, intercept
+
+def loop_lin_reg(X, y):
+    sum = 0
+    for i in y:
+        sum += i
+    y_mean = sum / len(y)
+
+    sum = 0
+    for i in X:
+        sum += i[0] 
+        X_mean = sum / len(X)
+
+    cov = 0
+    for i in range(len(y)):
+        cov += (X[i, 0] - X_mean) * (y[i] - y_mean)
+
+    var = 0
+    for i in range(len(X)):
+        var += (X[i, 0] - X_mean) ** 2
+
+    slope = cov / var
+    intercept = y_mean - (slope * X_mean)
+
+    return slope, intercept
 
 def main():
     X, y, df = read_csv()
