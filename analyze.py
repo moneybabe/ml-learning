@@ -14,10 +14,10 @@ def read_csv():
     return X, y, df
 
 def df_cov_var_lin_reg(df):
-    cov = df.cov().loc["X","CPI"]
-    var = df.var().loc["X"]
+    cov = df.cov().at["X","CPI"]
+    var = df.var().at["X"]
     slope = cov / var
-    intercept = df.mean().loc["CPI"] - slope*df.mean().loc["X"]
+    intercept = df.mean().at["CPI"] - slope*df.mean().at["X"]
 
     return slope, intercept
 
@@ -66,7 +66,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 """if wanted to split into train and test set"""
 # from sklearn.model_selection import train_test_split
